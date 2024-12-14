@@ -2,10 +2,45 @@
     ViewData["Title"] = "Trang Chủ";
 }
 
-<h2>Chào mừng đến với hệ thống quản lý sản phẩm</h2>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white text-center">
+                    <h2 class="mb-0">
+                        <i class="fas fa-store-alt me-2"></i>Hệ Thống Quản Lý
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-4">Chào mừng đến với hệ thống quản lý</h3>
 
-<div class="btn-group-vertical" role="group" aria-label="Basic example">
-    <a href="@Url.Action("Create", "Product")" class="btn btn-primary">Tạo Sản Phẩm</a>
-    <a href="@Url.Action("Index", "Product")" class="btn btn-success">Danh Sách Sản Phẩm</a>
-    <a href="@Url.Action("Index", "Store")" class="btn btn-info">Danh Sách Cửa Hàng</a>
+                    <div class="d-grid gap-3">
+                        <a href="@Url.Action("Create", "Product")" class="btn btn-primary btn-lg">
+                            <i class="fas fa-plus-circle me-2"></i>Tạo Sản Phẩm
+                        </a>
+                        <a href="@Url.Action("Index", "Product")" class="btn btn-success btn-lg">
+                            <i class="fas fa-list me-2"></i>Danh Sách Sản Phẩm
+                        </a>
+                        <a href="@Url.Action("Index", "Store")" class="btn btn-info btn-lg">
+                            <i class="fas fa-store me-2"></i>Danh Sách Cửa Hàng
+                        </a>
+                        <a href="@Url.Action("Index", "Service")" class="btn btn-warning btn-lg">
+                            <i class="fas fa-concierge-bell me-2"></i>Quản Lý Dịch Vụ
+                        </a>
+                        <!-- Thêm liên kết đến ReportController -->
+                        <a href="@Url.Action("Index", "Report")" class="btn btn-danger btn-lg">
+                            <i class="fas fa-chart-line me-2"></i>Thống Kê
+                        </a>
+                    </div>
+                </div>
+                <div class="card-footer text-center text-muted">
+                    © 2024 Hệ Thống Quản Lý
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+}

@@ -1,0 +1,186 @@
+﻿@model Web.Models.ProductSearchViewModel
+@{
+    ViewData["Title"] = "Kết Quả Tìm Kiếm Sản Phẩm - DaLatConnect";
+}
+
+<style>
+    body {
+        background-color: #f4f6f9;
+        font-family: 'Quicksand', sans-serif;
+    }
+
+    .search-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+    }
+
+    .product-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        margin-bottom: 1rem;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+    .product-image {
+        height: 200px;
+        object-fit: cover;
+        width: 100%;
+    }
+
+    .store-card {
+        transition: all 0.3s ease;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+        .store-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+    .store-image {
+        height: 250px;
+        object-fit: cover;
+        width: 100%;
+    }
+
+    .price-filter {
+        background-color: #f8f9fa;
+        padding: 1rem;
+        border-radius: 10px;
+    }
+</style>
+
+<div class="container search-container">
+    <div class="row">
+        <div class="col-md-3 mb-4">
+            <div class="card price-filter">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-filter me-2"></i>Lọc Theo Giá
+                    </h5>
+                    <form id="priceFilterForm">
+                        <div class="mb-3">
+                            <label for="minPrice" class="form-label">Giá Thấp Nhất</label>
+                            <input type="number" class="form-control" id="minPrice" name="minPrice" placeholder="Nhập giá tối thiểu">
+                        </div>
+                        <div class="mb-3">
+                            <label for="maxPrice" class="form-label">Giá Cao Nhất</label>
+                            <input type="number" class="form-control" id="maxPrice" name="maxPrice" placeholder="Nhập giá tối đa">
+                        </div>
+                        <div class="mb-3">
+                            <label for="priceSort" class="form-label">Sắp xếp theo giá</label>
+                            <select class="form-control" id="priceSort" name="priceSort">
+                                <option value="asc">Giá Thấp Đến Cao</option>
+                                <option value="desc">Giá Cao Đến Thấp</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-search me-2"></i>Lọc Sản Phẩm
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white text-center">
+                    <h2 class="mb-0">
+                        <i class="fas fa-search me-2"></i>Kết Quả Tìm Kiếm
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <form action="@Url.Action("SearchProduct", "Client")" method="get" class="mb-4">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Nhập tên sản phẩm" name="productName" required />
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search"></i> Tìm kiếm
+                            </button>
+                        </div>
+                    </form>
+
+                    <h4>Sản Phẩm Tìm Thấy: @(Model?.Products?.Count ?? 0)</h4>
+                    <div class="row">
+                        @if (Model?.Products != null)
+                        {
+                            @foreach (var product in Model.Products)
+                            {
+                                <div class="col-md-4 mb-4">
+                                    <div class="card product-card">
+                                        <img src="@(string.IsNullOrEmpty(product.imgurl) ? "/images/default-product.jpg" : product.imgurl)"
+                                             class="card-img-top product-image" alt="@product.Name">
+                                        <div class="card-body">
+                                            <h5 class="card-title">@product.Name</h5>
+                                            <p class="card-text text-primary fw-bold">@product.Price.ToString("N0") VND</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p>Không tìm thấy sản phẩm nào.</p>
+                        }
+                    </div>
+
+                    <h4 class="mt-4">Cửa Hàng Liên Quan: @(Model?.Stores?.Count ?? 0)</h4>
+                    <div class="row">
+                        @if (Model?.Stores != null)
+                        {
+                            @foreach (var store in Model.Stores)
+                            {
+                                <div class="col-md-4 mb-4">
+                                    <div class="card store-card">
+                                        <img src="@(string.IsNullOrEmpty(store.imgUrl) ? "/images/default-store.jpg" : store.imgUrl)"
+                                             class="card-img-top store-image" alt="@store.Name">
+                                        <div class="card-body">
+                                            <h5 class="card-title">@store.Name</h5>
+                                            <p class="card-text">
+                                                <i class="fas fa-map-marker-alt me-2"></i>
+                                                @store.SoNha, @store.Duong, @store.Phuong
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p>Không có cửa hàng nào liên quan.</p>
+                        }
+                    </div>
+                </div>
+                <div class="card-footer text-center text-muted">
+                    © 2024 DaLatConnect - Kết nối sản phẩm, dịch vụ
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(function() {
+            $('#priceFilterForm').on('submit', function(e) {
+                e.preventDefault();
+                var minPrice = $('#minPrice').val();
+                var maxPrice = $('#maxPrice').val();
+                var productName = $('input[name="productName"]').val();
+                var priceSort = $('#priceSort').val();  // Lấy giá trị priceSort
+
+                // Redirect with price filter parameters
+                window.location.href = '@Url.Action("SearchProduct", "Client")' +
+                    '?productName=' + encodeURIComponent(productName) +
+                    '&minPrice=' + minPrice +
+                    '&maxPrice=' + maxPrice +
+                    '&priceSort=' + priceSort;  // Thêm priceSort vào URL
+            });
+        });
+    </script>
+}

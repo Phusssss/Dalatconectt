@@ -11,8 +11,7 @@ namespace Web.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Store> Stores { get; set; }
         public DbSet<ProductStore> ProductStores { get; set; }
-
-
+        public DbSet<targetcustomers> targetcustomerss { get; set; }
 
         // Cấu hình mối quan hệ nhiều-nhiều giữa Product và Store
         protected override void OnModelCreating(ModelBuilder modelBuilder)

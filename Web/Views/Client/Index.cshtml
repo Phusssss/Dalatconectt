@@ -1,0 +1,153 @@
+﻿@{
+    ViewData["Title"] = "DaLatConnect - Xác Định Danh Tính";
+}
+<style>
+    body {
+        background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        font-family: 'Quicksand', sans-serif;
+    }
+
+    .website-header {
+        position: absolute;
+        top: 20px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: #004d40;
+        font-family: 'Quicksand', sans-serif;
+    }
+
+    .website-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .website-tagline {
+        font-size: 1rem;
+        color: #00695c;
+        font-weight: 500;
+    }
+
+    .card {
+        border: none;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        overflow: hidden;
+        transition: transform 0.3s ease;
+        margin-top: 80px;
+    }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+    .card-header {
+        background: linear-gradient(to right, #00796b, #009688);
+        color: white;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .btn-custom-local {
+        background-color: #2196f3;
+        background-image: linear-gradient(to right, #2196f3 0%, #64b5f6 100%);
+        color: white;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+    .btn-custom-tourist {
+        background-color: #4caf50;
+        background-image: linear-gradient(to right, #4caf50 0%, #81c784 100%);
+        color: white;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+    .btn-custom-student {
+        background-color: #ff5722;
+        background-image: linear-gradient(to right, #ff5722 0%, #ff8a50 100%);
+        color: white;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+        .btn-custom-local:hover,
+        .btn-custom-tourist:hover,
+        .btn-custom-student:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 7px 14px rgba(50,50,93,.1), 0 3px 6px rgba(0,0,0,.08);
+        }
+
+    .card-footer {
+        background-color: rgba(255,255,255,0.8);
+        color: #00695c;
+    }
+</style>
+
+<div class="website-header">
+    <div class="website-title">DaLatConnect</div>
+    <div class="website-tagline">Kết nối sản phẩm, dịch vụ đến tay người dùng</div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card animate__animated animate__fadeIn">
+                <div class="card-header">
+                    <h2 class="mb-0">
+                        <i class="fas fa-user-check me-2"></i>Bạn Là Ai?
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <form id="identityForm" asp-action="SaveIdentity" asp-controller="Client" method="post">
+                        <div class="d-grid gap-3">
+                            <button type="submit" name="identity" value="local" class="btn btn-custom-local btn-lg rounded-pill">
+                                <i class="fas fa-home me-2"></i>Người Dân Địa Phương Đà Lạt
+                            </button>
+                            <button type="submit" name="identity" value="tourist" class="btn btn-custom-tourist btn-lg rounded-pill">
+                                <i class="fas fa-plane me-2"></i>Khách Du Lịch
+                            </button>
+                            <button type="submit" name="identity" value="student" class="btn btn-custom-student btn-lg rounded-pill">
+                                <i class="fas fa-graduation-cap me-2"></i>Sinh Viên
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    Vui lòng chọn nhóm mà bạn thuộc về
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        $(function() {
+            $('#identityForm button').on('click', function(e) {
+                e.preventDefault();
+                var identity = $(this).val();
+                $.ajax({
+                    url: '@Url.Action("SaveIdentity", "Client")',
+                    type: 'POST',
+                    data: { identity: identity },
+                    success: function(response) {
+                        if (response.success) {
+                            window.location.href = response.redirectUrl;
+                        }
+                    },
+                    error: function() {
+                        alert('Có lỗi xảy ra. Vui lòng thử lại.');
+                    }
+                });
+            });
+        });
+    </script>
+}
