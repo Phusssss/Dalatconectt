@@ -1,0 +1,12 @@
+﻿@model StoreProductViewModel
+
+<h2>@Model.Store.Name</h2>
+
+<ul>
+    @foreach (var product in Model.Products)
+    {
+        <li>@product.Name - @product.Price</li>
+    }
+</ul>
+
+<a href="@Url.Action("AddProduct", "Store", new { storeId = Model.Store.Id })">Thêm sản phẩm</a>

@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Web.Models.Store>
+
+@{
+    ViewData["Title"] = "Danh Sách Cửa Hàng";
+}
+
+<h2>Danh Sách Cửa Hàng</h2>
+<a href="@Url.Action("AddStore", "Store")" class="btn btn-primary">Thêm cửa hàng</a>
+
+<div class="row">
+    @foreach (var store in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                @if (!string.IsNullOrEmpty(store.imgUrl))
+                {
+                    <img src="@store.imgUrl" class="card-img-top" alt="Store Image" />
+                }
+                else
+                {
+                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Default Store Image" />
+                }
+
+                <div class="card-body">
+                    <h5 class="card-title">@store.Name</h5>
+                    <p class="card-text">@store.Phuong, @store.Duong, @store.SoNha</p>
+                    <a href="@Url.Action("Details", "Store", new { id = store.Id })" class="btn btn-info">Xem sản phẩm</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

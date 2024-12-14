@@ -1,0 +1,42 @@
+﻿@model Web.Models.Product
+
+<h2>Create Product</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description" class="control-label"></label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Price" class="control-label"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="imgurl">Image URL</label>
+        <input asp-for="imgurl" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Select Stores</label>
+        <select asp-for="TheLoaiId" class="form-control">
+            <option value="">-- Choose a Category --</option>
+            @foreach (var item in ViewBag.StoreList as List<Web.Models.Store>)
+            {
+                <option value="@item.Id">@item.Name</option>
+            }
+        </select>
+        <span asp-validation-for="TheLoaiId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>

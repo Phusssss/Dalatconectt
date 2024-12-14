@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "Trang Chủ";
+}
+
+<h2>Chào mừng đến với hệ thống quản lý sản phẩm</h2>
+
+<div class="btn-group-vertical" role="group" aria-label="Basic example">
+    <a href="@Url.Action("Create", "Product")" class="btn btn-primary">Tạo Sản Phẩm</a>
+    <a href="@Url.Action("Index", "Product")" class="btn btn-success">Danh Sách Sản Phẩm</a>
+    <a href="@Url.Action("Index", "Store")" class="btn btn-info">Danh Sách Cửa Hàng</a>
+</div>
